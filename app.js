@@ -1,11 +1,13 @@
-import express from 'express';
-const app = express();
-const port = 3000;
+const express = require("express")
+const app = express() 
+require("dotenv/config")
+const port = process.env.puerto
+const PUERTO = port || 3030
 
-app.get('/', (_req, res) => {
-   res.send('Aprendiendo express, ficha 3407181');
-});
+app.get("/", function (req, res) {
+   res.send("API - Rest Aprendices");
+})
 
-app.listen(port, () => {
-   console.log('Servidor en funcionamiento en el puerto: ' + port);
-});
+app.listen(PUERTO, function() {
+   console.log(`SERVIDOR  http://localhost:${PUERTO}`);
+})
