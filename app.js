@@ -9,6 +9,7 @@ const app = express();
 const port = process.env.PUERTO || 5050;
 //uso de middleware para leer el body en formato json
 app.use(express.json())
+app.use(express.urlencoded({extended: true}))
 
 app.get("/", (req, res) => {
   res.send(`Aprendiendo express, ficha 3407181, ADSO en el curso de desarrollo web el 31 de julio de 2026`);
@@ -49,59 +50,32 @@ app.get("/ruta4", (req, res) => {
 //endpoint para envio de datos formato json
 app.post("/ruta2", (req, res)=>{
   const todosDatos = req.body
-  const name= req.body.nombre
-  const lastname= req.body.Cargo
-  res.status(201).json({Datos: todosDatos, Nombre: name, Apellido: lastname, Cargo: "Aprendiz"})
+  const miNombre= req.body.nombre1
+  const miApellido= req.body.apellido2
+  const miCargo= req.body.cargo3
+  res.status(200).json({Mensaje : "Datos recibidos", nombre: miNombre, apellido: miApellido, cargo: miCargo})
 })
 
-// Endpoint de login con validaciones
-app.post("/login", (req, res) => {
-  const { usuario, perfil, contraseña } = req.body;
-  
-  // Validar datos faltantes
-  if (!usuario && !perfil && !contraseña) {
-    return res.status(400).json({
-      mensaje: "No se enviaron datos. Por favor proporcione usuario, perfil y contraseña."
-    });
-  }
-  
-  if (!usuario) {
-    return res.status(400).json({
-      mensaje: "Falta el campo 'usuario'. Por favor ingrese su usuario."
-    });
-  }
-  
-  if (!perfil) {
-    return res.status(400).json({
-      mensaje: "Falta el campo 'perfil'. Por favor ingrese su perfil (Admin/User)."
-    });
-  }
-  
-  if (!contraseña) {
-    return res.status(400).json({
-      mensaje: "Falta el campo 'contraseña'. Por favor ingrese su contraseña."
-    });
-  }
-  
-  // Validar el perfil
-  if (perfil !== "Admin" && perfil !== "User") {
-    return res.status(400).json({
-      mensaje: "Perfil no válido. Los perfiles permitidos son: 'Admin' o 'User'."
-    });
-  }
-  
-  // Mensaje según el perfil
-  if (perfil === "Admin") {
+app.post("/login", (req, res)=>{
+
+  if(usuario == "user" && password == "1234"){
     return res.status(200).json({
-      mensaje: `Bienvenido Administrador ${usuario}. Tiene acceso completo al sistema.`
+      mensaje: "Bienvenido al sistema"
     });
-  } else if (perfil === "User") {
-    return res.status(200).json({
-      mensaje: `Bienvenido Usuario ${usuario}. Tiene acceso limitado al sistema.`
-    });
-  }
+}
+  return res.status(403).json({
+    mensaje: "Usuario no autorizado"
+  });
 });
 
-app.listen(port, function() {
+  app.post("/formulario", (req, res)=>{
+  const datosForm = req.body
+  const miNombre = req.body.nombre1
+  const miApellido = req.body.apellido2
+  const miCargo = req.body.cargo3
+  res.status(200).json({Mensaje: "Datos recibidos", nombre: miNombre, apellido: miApellido, cargo: miCargo})
+})
+
+  app.listen(port, function() {
   console.log(`SERVIDOR: http://localhost:${port}`);
 });
