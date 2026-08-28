@@ -10,7 +10,6 @@ const rutaArchivoJson = ruta.join(__dirname, "datos.json")
 app.get("/", function (req, res) {
    res.send("API - Rest Aprendices");
 })
-//
 app.get("/api/aprendices", function (req, res) {
    //los datos se pueden traer de una base de datos, de un archivo, etc
    sistemaArchivo.readFile(rutaArchivoJson, "utf8", function(error, datos) {
@@ -20,6 +19,10 @@ app.get("/api/aprendices", function (req, res) {
       const listaAprendices = JSON.parse(datos);
       res.json(listaAprendices);
    })
+})
+//endpoint para crear un aprendiz
+app.post("/api/aprendices", function (req, res) {
+   res.json({mensaje: "Trabajando en el endpoint "})
 })
 
 app.listen(PUERTO, function() {
